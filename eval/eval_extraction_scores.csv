@@ -1,0 +1,4 @@
+prompt_version,overall_accuracy,vendor_accuracy,invoice_number_accuracy,invoice_date_accuracy,total_amount_accuracy,currency_accuracy
+plain,0.95,1.0,1.0,1.0,0.95,1.0
+field_description,1.0,1.0,1.0,1.0,0.95,1.0
+worked_example,1.0,1.0,1.0,1.0,1.0,1.0

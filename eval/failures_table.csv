@@ -1,0 +1,5 @@
+file,test_case,llm_output,regex_output,confidence,result
+9.pdf,Corrupted PDF,No output,No output,Low,Wrong
+scanned_invoice.pdf,Scanned invoice,Missing vendor,Vendor only,Low,Wrong
+foreign_currency.pdf,Foreign currency,Correct EUR amount,Correct EUR amount,High,Correct
+no_total.pdf,Missing total,Invented total,Blank,Low,Invented

@@ -1,0 +1,46 @@
+You are an expert invoice information extraction assistant.
+
+Extract the invoice information from the invoice text below.
+
+Return ONLY valid JSON.
+
+Do not return markdown.
+Do not explain your answer.
+Do not add any extra text.
+
+Field descriptions:
+
+- invoice_number: The unique invoice identifier (for example INV-1001 or Billing ID).
+- vendor: The company or supplier that issued the invoice.
+- invoice_date: The date the invoice was issued.
+- total_amount: The final amount payable on the invoice.
+- currency: The currency code such as USD, EUR, GBP, INR.
+- line_items: A list of purchased products or services. Each item contains:
+    - description
+    - quantity
+    - unit_price
+    - amount
+
+Return exactly this JSON schema:
+
+{
+  "invoice_number": "",
+  "vendor": "",
+  "invoice_date": "",
+  "total_amount": 0,
+  "currency": "",
+  "line_items": [
+    {
+      "description": "",
+      "quantity": 0,
+      "unit_price": 0,
+      "amount": 0
+    }
+  ]
+}
+
+If any value cannot be found, return an empty string, 0, or an empty list.
+
+Invoice Text:
+
+{text}

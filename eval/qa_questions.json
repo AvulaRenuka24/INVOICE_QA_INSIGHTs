@@ -1,0 +1,77 @@
+[
+  {
+    "question": "What is the invoice number?",
+    "expected_phrase": "INV",
+    "answerable": true
+  },
+  {
+    "question": "Who is the vendor?",
+    "expected_phrase": "",
+    "answerable": true
+  },
+  {
+    "question": "What is the invoice date?",
+    "expected_phrase": "2026",
+    "answerable": true
+  },
+  {
+    "question": "What is the total amount?",
+    "expected_phrase": "",
+    "answerable": true
+  },
+  {
+    "question": "What currency is used?",
+    "expected_phrase": "USD",
+    "answerable": true
+  },
+  {
+    "question": "What is the billing ID?",
+    "expected_phrase": "",
+    "answerable": true
+  },
+  {
+    "question": "Which company issued this invoice?",
+    "expected_phrase": "",
+    "answerable": true
+  },
+  {
+    "question": "When was the invoice issued?",
+    "expected_phrase": "2026",
+    "answerable": true
+  },
+  {
+    "question": "What amount should be paid?",
+    "expected_phrase": "",
+    "answerable": true
+  },
+  {
+    "question": "Which invoice is being referenced?",
+    "expected_phrase": "INV",
+    "answerable": true
+  },
+  {
+    "question": "What is the CEO's phone number?",
+    "expected_phrase": "",
+    "answerable": false
+  },
+  {
+    "question": "Who is the president of the company?",
+    "expected_phrase": "",
+    "answerable": false
+  },
+  {
+    "question": "What is the employee salary?",
+    "expected_phrase": "",
+    "answerable": false
+  },
+  {
+    "question": "What is the company's bank password?",
+    "expected_phrase": "",
+    "answerable": false
+  },
+  {
+    "question": "Who approved this invoice internally?",
+    "expected_phrase": "",
+    "answerable": false
+  }
+]
