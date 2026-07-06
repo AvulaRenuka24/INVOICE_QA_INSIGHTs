@@ -1,19 +1,27 @@
+"""
+Task 2 – Pydantic Models for Invoice Extraction
+
+Defines the Invoice and LineItem schemas used for structured
+extraction and validation.
+"""
+
 from typing import List, Optional
 
 from pydantic import BaseModel, Field
 
 
 class LineItem(BaseModel):
-    description: str = Field(default="")
-    quantity: Optional[float] = None
-    unit_price: Optional[float] = None
-    amount: Optional[float] = None
+    """A single line item on an invoice."""
 
+    description: str = Field(default="")
+    amount: float = Field(default=0.0)
 
 class Invoice(BaseModel):
-    invoice_number: str
-    vendor: str
-    invoice_date: str
-    total_amount: float
-    currency: str
+    """Structured invoice data extracted from a PDF."""
+
+    invoice_number: str = Field(default="")
+    vendor: str = Field(default="")
+    invoice_date: str = Field(default="")
+    total_amount: float = Field(default=0.0)
+    currency: str = Field(default="")
     line_items: List[LineItem] = Field(default_factory=list)

@@ -12,8 +12,8 @@ class QAResponse(BaseModel):
     context_found: bool
 
 
-def load_prompt():
-    return PROMPT_FILE.read_text(encoding="utf-8")
+def load_prompt(prompt_file=PROMPT_FILE):
+    return Path(prompt_file).read_text(encoding="utf-8")
 
 
 def clean_response(text: str) -> str:
@@ -55,7 +55,10 @@ def faithfulness_check(answer: str, chunks: list) -> bool:
     return False
 
 
-def ask(question: str) -> QAResponse:
+def ask(
+    question: str,
+    prompt_file=PROMPT_FILE
+) -> QAResponse:
 
     chunks = search(question)
 
@@ -78,7 +81,7 @@ def ask(question: str) -> QAResponse:
         )
     )
 
-    prompt = load_prompt()
+    prompt = load_prompt(prompt_file)
 
     prompt = prompt.replace("{question}", question)
     prompt = prompt.replace("{context}", context)

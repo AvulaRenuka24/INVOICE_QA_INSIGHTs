@@ -42,106 +42,92 @@ The system combines Prompt Engineering, Retrieval-Augmented Generation (RAG), Ch
 
 ```
 INVOICE_QA_INSIGHTs/
-│
-├── analysis.py
-├── clean_data.py
+
+├── llm.py
 ├── extract.py
 ├── extract_fallback.py
-├── llm.py
 ├── models.py
-├── qa.py
 ├── retriever.py
-├── requirements.txt
+├── qa.py
+├── clean_data.py
+├── analysis.py
 │
 ├── prompts/
-│   ├── extraction_v1_plain.txt
-│   ├── extraction_v2_field_description.txt
-│   ├── extraction_v3_worked_example.txt
-│   ├── answer_v1.txt
-│   └── answer_v2.txt
+│     extraction_v1_plain.txt
+│     extraction_v2_field_desc.txt
+│     extraction_v3_worked_example.txt
+│     answer_v1.txt
+│     answer_v2.txt
 │
 ├── eval/
-│   ├── ground_truth.csv
-│   ├── qa_questions.json
-│   ├── eval_extraction.py
-│   ├── eval_answers.py
-│   ├── eval_extraction_scores.csv
-│   ├── eval_answers_scores.csv
-│   └── failures_table.csv
+│     ground_truth.csv
+│     qa_questions.json
+│     eval_extraction.py
+│     eval_answers.py
+│     test_limits.py
 │
-├── data/
-│   ├── raw_invoices/
-│   ├── extracted_invoices.csv
-│   ├── clean_invoices.csv
-│   └── charts/
-│       ├── vendor_spend.png
-│       └── monthly_spend.png
-│
-└── logs/
-    └── llm_calls.log
-```
+└── data/
+      Charts/
+      chroma_db
+      raw_invoices
+      clean_invoices.csv
+      extracted_invoices.csv
 
----
 
 ## Workflow
 
-```
-PDF Invoices
+PDF Invoices (525)
         │
         ▼
-Text Extraction (pdfplumber)
+PDF Text Extraction (pdfplumber)
         │
         ▼
-Local LLM (Qwen2.5)
+Qwen2.5 LLM
         │
-        ▼
-JSON Validation (Pydantic)
-        │
-        ▼
-Retry on Failure
-        │
-        ▼
+        ├──────────────┐
+        │              │
+        ▼              ▼
+JSON Validation     Retry
+        │              │
+        └──────┬───────┘
+               ▼
 Regex Fallback
-        │
-        ▼
-Extracted Invoice Data
-        │
-        ▼
-Prompt Evaluation
-        │
-        ▼
-Retriever (ChromaDB)
-        │
-        ▼
+               │
+               ▼
+Structured Invoice Data
+               │
+               ▼
+Dataset Cleaning
+               │
+               ▼
+ChromaDB + MiniLM Embeddings
+               │
+               ▼
+Semantic Search
+               │
+               ▼
 Question Answering
-        │
-        ▼
-Data Cleaning
-        │
-        ▼
-Statistical Analysis
-        │
-        ▼
-Charts & Insights
-```
+               │
+               ▼
+Statistics + Charts
 
----
 
 ## Features
 
-- Local LLM-based invoice extraction
-- Retry mechanism for invalid responses
-- Regex fallback extraction
-- Prompt engineering and evaluation
-- Semantic search using embeddings
-- Retrieval-Augmented Question Answering (RAG)
-- Data cleaning and normalization
-- Duplicate detection
-- Currency conversion
-- Business analytics
-- Visualization using Matplotlib
+- Local LLM using Qwen2.5-0.5B-Instruct
+- Structured invoice extraction with Pydantic validation
+- Automatic retry on validation failure
+- Regex fallback extractor
+- Prompt engineering with three prompt versions
+- Automatic prompt evaluation using ground truth
+- Semantic retrieval using ChromaDB + all-MiniLM-L6-v2
+- Question Answering with source citations
+- Faithfulness check to reduce hallucinations
+- Dataset cleaning and normalization
+- Statistical analysis and visualization
 
----
+
+
 
 ## How to Run
 
@@ -186,23 +172,27 @@ python clean_data.py
 ```bash
 python analysis.py
 ```
+## Dataset
 
----
+- 525 invoice PDFs
+- 20 manually labelled invoices for evaluation
+- ChromaDB vector database
 
 ## Outputs
 
 The project generates:
 
-- Extracted invoice dataset
-- Clean invoice dataset
-- Vendor spend chart
-- Monthly spend chart
-- Prompt evaluation reports
-- Question answering evaluation reports
-- Failure analysis report
-- LLM execution logs
+Generated Outputs
 
----
+- extracted_invoices.csv
+- clean_invoices.csv
+- eval_extraction_scores.csv
+- eval_answers_scores.csv
+- failures_table.csv
+- vendor_spend.png
+- monthly_spend.png
+
+
 
 ## Future Improvements
 

@@ -1,5 +1,6 @@
 file,test_case,llm_output,regex_output,confidence,result
-9.pdf,Corrupted PDF,No output,No output,Low,Wrong
-scanned_invoice.pdf,Scanned invoice,Missing vendor,Vendor only,Low,Wrong
-foreign_currency.pdf,Foreign currency,Correct EUR amount,Correct EUR amount,High,Correct
-no_total.pdf,Missing total,Invented total,Blank,Low,Invented
+112.pdf,Scanned invoice (image PDF),No output,No output,Low,Wrong
+9.pdf,Missing/corrupt data,vendor=ABC Company; inv=INVOICE-1234; amount=1000.0; currency=USD,Empty fields,Low,Hallucinated
+1.pdf,Foreign currency (non-USD),vendor=Massive; inv=INV-24990; amount=13082.48; currency=GBP,vendor=MASSIVE DYNAMIC; inv=INV-24990; amount=13082.48; currency=GBP,High,Correct
+102.pdf,Near-duplicate invoice,vendor=GEKKO AND CO; inv=INV-77326; amount=9.58746; currency=EUR,vendor=GEKKO AND CO; amount=9.587; currency=EUR,High,Correct
+103.pdf,Near-duplicate invoice,No output,vendor=GEKKO AND CO; inv=INV-59549; amount=19801.97; currency=INR,Low,Correct
