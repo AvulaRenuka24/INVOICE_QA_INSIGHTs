@@ -81,6 +81,7 @@ def main():
     plt.title("Spend per Vendor (Top 10)")
     plt.xlabel("Vendor")
     plt.ylabel(f"Spend ({currency})")
+    plt.xticks(rotation=45, ha="right")
     plt.ylim(bottom=0)
 
     if len(top10) > 0:
@@ -88,7 +89,8 @@ def main():
             0,
             top10.iloc[0],
             "Top Vendor",
-            ha="center"
+            ha="center",
+            va="bottom"
         )
 
     plt.tight_layout()
@@ -112,7 +114,6 @@ def main():
     plt.title("Spend per Month")
     plt.xlabel("Month")
     plt.ylabel(f"Spend ({currency})")
-
     plt.ylim(bottom=0)
 
     if len(monthly) > 0:
@@ -127,7 +128,9 @@ def main():
         plt.text(
             peak_index,
             monthly.values[peak_index],
-            "Peak Month"
+            "Peak Month",
+            ha="center",
+            va="bottom"
         )
 
     plt.tight_layout()

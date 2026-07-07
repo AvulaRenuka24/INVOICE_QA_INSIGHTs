@@ -12,7 +12,10 @@ DB_DIR = Path("data/chroma_db")
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
 client = chromadb.PersistentClient(path=str(DB_DIR))
-collection = client.get_or_create_collection("invoice_chunks")
+collection = client.get_or_create_collection(
+    name="invoice_chunks",
+    metadata={"hnsw:space": "cosine"}
+)
 
 
 def chunk_text(text: str, chunk_size: int = 500, overlap: int = 100):
@@ -134,6 +137,7 @@ def build_index():
             print(f"Skipped {pdf.name}: {e}")
 
     print("\nIndex completed successfully.")
+    print(f"Total indexed chunks: {collection.count()}")
 
 
 def search(question: str, top_k: int = 4):
