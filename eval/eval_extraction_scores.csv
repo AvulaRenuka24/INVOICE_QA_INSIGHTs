@@ -1,4 +1,4 @@
 prompt_version,overall_accuracy,vendor_accuracy,invoice_number_accuracy,invoice_date_accuracy,total_amount_accuracy,currency_accuracy
-v1_plain,0.0,0.944,0.889,0.0,0.722,0.778
-v2_field_desc,0.0,0.778,0.444,0.0,0.611,0.778
-v3_worked_example,0.0,0.833,0.5,0.0,0.556,0.833
+v1_plain,0.444,0.944,0.889,0.722,0.722,0.778
+v2_field_desc,0.278,0.778,0.444,0.611,0.611,0.778
+v3_worked_example,0.278,0.833,0.5,0.611,0.556,0.833

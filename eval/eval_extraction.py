@@ -11,6 +11,7 @@ Usage:
 
 import csv
 import sys
+from datetime import datetime
 from pathlib import Path
 
 # Allow imports from project root
@@ -58,6 +59,43 @@ def normalize(value: str) -> str:
     return str(value).strip().lower().replace(",", "").replace(" ", "")
 
 
+# Date formats seen across ground truth and LLM output. Tried in order.
+DATE_FORMATS = [
+    "%Y-%m-%d",     # 2026-06-01
+    "%d-%m-%Y",     # 01-06-2026
+    "%d/%m/%Y",     # 01/06/2026
+    "%m/%d/%Y",     # 06/01/2026
+    "%d %B %Y",     # 01 June 2026
+    "%d %b %Y",     # 01 Jun 2026
+    "%B %d, %Y",    # June 01, 2026
+    "%b %d, %Y",    # Jun 01, 2026
+    "%Y/%m/%d",     # 2026/06/01
+]
+
+
+def normalize_date(value: str) -> str:
+    """
+    Parse a date string in any of the known formats and return it as
+    YYYY-MM-DD, so dates that are semantically identical but written
+    differently (e.g. "01 June 2026" vs "01-06-2026") compare equal.
+    Falls back to the raw normalized string if no format matches, so
+    an unparseable value still gets compared rather than crashing.
+    """
+    raw = str(value).strip()
+    if not raw:
+        return ""
+
+    for fmt in DATE_FORMATS:
+        try:
+            return datetime.strptime(raw, fmt).strftime("%Y-%m-%d")
+        except ValueError:
+            continue
+
+    # No known format matched — fall back to the old normalized text
+    # so comparison still runs instead of raising.
+    return normalize(raw)
+
+
 def field_matches(predicted: str, expected: str, field: str) -> bool:
     """
     Compare a predicted field against the expected ground truth value.
@@ -77,6 +115,9 @@ def field_matches(predicted: str, expected: str, field: str) -> bool:
             return abs(float(pred) - float(exp)) < 1.0
         except (ValueError, TypeError):
             return False
+
+    if field == "invoice_date":
+        return normalize_date(predicted) == normalize_date(expected)
 
     # For vendor: check containment (handles minor formatting differences)
     if field == "vendor":

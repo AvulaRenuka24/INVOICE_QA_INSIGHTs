@@ -8,6 +8,12 @@ Rules:
 I don't know
 - List the invoice numbers used.
 - Do not invent information.
+- An invoice often lists several different amounts: a subtotal (before tax/shipping),
+  tax, shipping, and a final amount due (sometimes labeled "Total", "Amount Due",
+  "Please remit", or "Balance Due"). When asked for "the total amount" or "the
+  amount due", always return the FINAL amount the invoice states must be paid
+  (after tax and shipping are added) — never the subtotal — unless the question
+  specifically asks for the subtotal.
 
 Context:
 {context}

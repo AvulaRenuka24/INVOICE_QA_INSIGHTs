@@ -1,76 +1,91 @@
 [
   {
-    "question": "What is the invoice number?",
-    "expected_phrase": "INV",
+    "invoice_number": "2026/INV/83490",
+    "question": "Which vendor issued invoice 2026/INV/83490?",
+    "expected_phrase": "Wayne Enterprises",
     "answerable": true
   },
   {
-    "question": "Who is the vendor?",
-    "expected_phrase": "",
+    "invoice_number": "66829-INV",
+    "question": "What currency is used on invoice 66829-INV?",
+    "expected_phrase": "EUR",
     "answerable": true
   },
   {
-    "question": "What is the invoice date?",
-    "expected_phrase": "2026",
+    "invoice_number": "89226-INV",
+    "question": "Which vendor issued invoice 89226-INV?",
+    "expected_phrase": "Globex",
     "answerable": true
   },
   {
-    "question": "What is the total amount?",
-    "expected_phrase": "",
+    "invoice_number": "INV-93354",
+    "question": "What is the amount due on invoice INV-93354?",
+    "expected_phrase": "20,506.61",
     "answerable": true
   },
   {
-    "question": "What currency is used?",
-    "expected_phrase": "USD",
+    "invoice_number": "2026/INV/15930",
+    "question": "Which vendor issued invoice 2026/INV/15930?",
+    "expected_phrase": "Cyberdyne",
     "answerable": true
   },
   {
-    "question": "What is the billing ID?",
-    "expected_phrase": "",
+    "invoice_number": "INV-6245",
+    "question": "What currency is used on invoice INV-6245?",
+    "expected_phrase": "EUR",
     "answerable": true
   },
   {
-    "question": "Which company issued this invoice?",
-    "expected_phrase": "",
+    "invoice_number": "INV-58592",
+    "question": "Which vendor issued invoice INV-58592?",
+    "expected_phrase": "Oscorp",
     "answerable": true
   },
   {
-    "question": "When was the invoice issued?",
-    "expected_phrase": "2026",
+    "invoice_number": "2026/INV/97587",
+    "question": "What is the amount due on invoice 2026/INV/97587?",
+    "expected_phrase": "12,917.27",
     "answerable": true
   },
   {
-    "question": "What amount should be paid?",
-    "expected_phrase": "",
+    "invoice_number": "INV-72483",
+    "question": "What currency is used on invoice INV-72483?",
+    "expected_phrase": "GBP",
     "answerable": true
   },
   {
-    "question": "Which invoice is being referenced?",
-    "expected_phrase": "INV",
+    "invoice_number": "27727/INV",
+    "question": "What is the total to remit on invoice 27727/INV?",
+    "expected_phrase": "25,053.57",
     "answerable": true
   },
   {
-    "question": "What is the CEO's phone number?",
-    "expected_phrase": "",
-    "answerable": false
-  },
-  {
-    "question": "Who is the president of the company?",
-    "expected_phrase": "",
-    "answerable": false
-  },
-  {
-    "question": "What is the employee salary?",
-    "expected_phrase": "",
-    "answerable": false
-  },
-  {
-    "question": "What is the company's bank password?",
+    "invoice_number": "INV-93354",
+    "question": "What is the CEO's name on invoice INV-93354?",
     "expected_phrase": "",
     "answerable": false
   },
   {
-    "question": "Who approved this invoice internally?",
+    "invoice_number": "66829-INV",
+    "question": "What is the buyer's credit card number on invoice 66829-INV?",
+    "expected_phrase": "",
+    "answerable": false
+  },
+  {
+    "invoice_number": "89226-INV",
+    "question": "How many employees does Globex LLC have?",
+    "expected_phrase": "",
+    "answerable": false
+  },
+  {
+    "invoice_number": "2026/INV/15930",
+    "question": "What is the delivery tracking number for invoice 2026/INV/15930?",
+    "expected_phrase": "",
+    "answerable": false
+  },
+  {
+    "invoice_number": "INV-72483",
+    "question": "What discount code was applied to invoice INV-72483?",
     "expected_phrase": "",
     "answerable": false
   }

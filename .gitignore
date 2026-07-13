@@ -15,6 +15,28 @@ logs/*.log
 # Environment variables
 .env
 
+(.venv) PS C:\Users\avula\OneDrive\Desktop\INVOICE_QA_INSIGHTs> type .gitignore
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual Environment
+.venv/
+venv/
+
+# Logs
+logs/*.log
+
+# VS Code
+.vscode/
+
+# Environment variables
+.env
+
 # Operating System files
 .DS_Store
 Thumbs.db
+
+# Generated files
+data/chroma_db/
+uploads/

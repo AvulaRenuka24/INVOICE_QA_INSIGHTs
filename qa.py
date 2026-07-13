@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 from pydantic import BaseModel
 from llm import generate
@@ -53,6 +54,37 @@ def faithfulness_check(answer: str, chunks: list) -> bool:
             return True
 
     return False
+
+
+# Labels that mark the FINAL amount owed, in priority order — never the
+# subtotal. A 0.5B model doesn't reliably follow a written instruction to
+# prefer these over "Subtotal", so this is enforced in code, not the prompt.
+FINAL_TOTAL_PATTERNS = [
+    r"Please\s+remit\s+([A-Z]{0,3}\s?[\d,]+\.\d{2})",
+    r"(?:Total\s+Amount\s+Due|Amount\s+Due|Balance\s+Due)\s*:?\s*([A-Z]{0,3}\s?[\d,]+\.\d{2})",
+    r"(?<!Sub)Total\s*:?\s*([A-Z]{0,3}\s?[\d,]+\.\d{2})",
+]
+
+TOTAL_QUESTION_KEYWORDS = ["total", "amount due", "how much", "owe", "balance", "pay"]
+
+
+def extract_final_total(context: str):
+    """
+    Find the amount the invoice itself labels as the final amount to be
+    paid (e.g. "Please remit X" / "Amount Due: X"), as opposed to a
+    subtotal, tax, or shipping line. Returns None if no such label is
+    found in the retrieved context.
+    """
+    for pattern in FINAL_TOTAL_PATTERNS:
+        match = re.search(pattern, context, re.IGNORECASE)
+        if match:
+            return match.group(1).strip()
+    return None
+
+
+def is_total_question(question: str) -> bool:
+    q = question.lower()
+    return any(keyword in q for keyword in TOTAL_QUESTION_KEYWORDS)
 
 
 def ask(
@@ -114,6 +146,17 @@ def ask(
             sources=[],
             context_found=False
         )
+
+    # Deterministic backstop: if this is a "total amount" style question
+    # and the context contains an explicitly labeled final amount (e.g.
+    # "Please remit GBP 6,061.08") that differs from what the model said,
+    # trust the label over the model — a 0.5B model frequently grabs the
+    # nearest dollar figure (often "Subtotal") instead of reasoning about
+    # which one is the actual amount due.
+    if is_total_question(question):
+        final_total = extract_final_total(context)
+        if final_total and final_total.replace(" ", "") not in answer.replace(" ", ""):
+            answer = final_total
 
     return QAResponse(
         answer=answer,

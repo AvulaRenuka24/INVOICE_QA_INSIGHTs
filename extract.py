@@ -27,7 +27,7 @@ PROMPTS_DIR = Path("prompts")
 LOG_FILE = Path("logs/llm_calls.log")
 
 # Best prompt selected from Task 3 evaluation
-BEST_PROMPT = "extraction_v3_worked_example.txt"
+BEST_PROMPT = Path("prompts/extraction_v1_plain.txt")
 
 
 def load_prompt(prompt_file: str) -> str:
@@ -114,6 +114,10 @@ def extract_invoice(
 
     prompt = load_prompt(prompt_file).replace("{text}", invoice_text)
 
+    # first_error must be declared outside the try/except, because Python
+    # deletes an `except ... as name` binding as soon as that block ends.
+    first_error = None
+
     # --- Stage 1: LLM ---
     try:
         response = call_llm(prompt)
@@ -121,7 +125,8 @@ def extract_invoice(
         log_result(filename, "llm")
         return invoice
 
-    except (ValidationError, Exception) as first_error:
+    except Exception as e:
+        first_error = e
         logger.warning(f"{filename}: LLM attempt 1 failed – {first_error}")
 
     # --- Stage 2: Retry with error feedback ---
